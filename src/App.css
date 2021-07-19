@@ -26,6 +26,7 @@ body {
   position: relative;
  
 }
+
 .clock::after {
   content: '';
   height: 30px;
@@ -140,4 +141,9 @@ body {
   width: 10px;
   height: 30%;
   background-color: black;
+}
+
+.showLog {
+  position: relative;
+  top: -100px;
 }
