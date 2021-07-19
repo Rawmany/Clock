@@ -147,3 +147,27 @@ body {
   position: relative;
   top: -100px;
 }
+
+.showTime-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #fff;
+  box-shadow: 0 20px 40px #d8e1ea;
+  width: 300px;
+  height: auto;
+  padding: 30px;
+  text-align: center;
+}
+
+.showTime-container ul, li {
+  position: relative;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.showTime-container li {
+  list-style: none;
+  padding: 10px 0;
+}

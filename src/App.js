@@ -6,64 +6,60 @@ import ClickLog from './Click-log'
 
 class App extends Component {
 
-  
-
-   state = {   
+  state = {
     secondRatio: 0,
     minuteRatio: 0,
     hourRatio: 0,
-    // timerLog: [1, 2, 3, 4]
-    isVisible: false,    
-  }  
-
-  updateVisible = () => {
-    this.setState({isVisible: true})      
-   
-    console.log(this.state.isVisible)
+    isVisible: false,
+    timeClick: [],
   }
- 
 
- componentDidMount () {
-   setInterval(() => {
-     this.setClock()
-   }, 1000);
- }
+  componentDidMount() {
+    setInterval(() => {
+      this.setClock()
+    }, 1000);
+  }
 
-  
-   setClock = () =>{
-    
-      const currentDate = new Date();
-       let secondRatio = currentDate.getSeconds() / 60;
-       let minuteRatio = (secondRatio + currentDate.getMinutes()) / 60;
-       let hourRatio = (minuteRatio + currentDate.getHours()) / 12;
-      this.setState({secondRatio: secondRatio = currentDate.getSeconds() / 60}) 
-       this.setState({minuteRatio: minuteRatio = (secondRatio + currentDate.getMinutes()) / 60}) 
-       // eslint-disable-next-line no-unused-vars
-       this.setState({hourRatio:hourRatio = (minuteRatio + currentDate.getHours()) / 12});       
-      
-   }    
-  
-   saveTimeHandler (state) {
-    // const currentDate = new Date();
-    console.log(state)
 
-    // this.setState((state) => ) 
 
-   }
+  setClock = () => {
+    const currentDate = new Date();
+    let secondRatio = currentDate.getSeconds() / 60;
+    let minuteRatio = (secondRatio + currentDate.getMinutes()) / 60;
+    let hourRatio = (minuteRatio + currentDate.getHours()) / 12;
+    this.setState({secondRatio: secondRatio = currentDate.getSeconds() / 60})
+    this.setState({minuteRatio: minuteRatio = (secondRatio + currentDate.getMinutes()) / 60})
+    // eslint-disable-next-line no-unused-vars
+    this.setState({hourRatio: hourRatio = (minuteRatio + currentDate.getHours()) / 12});
 
-  render(){
+  }
+
+  showClickTime = (state) => {
+
+    const currentDate = new Date();
+    let clickHour = currentDate.getHours();
+    let clickMinute = currentDate.getMinutes();
+    let clickSecond = currentDate.getSeconds();
+    let result = `${clickHour}:${clickMinute}:${clickSecond}`;
+    let arr = this.state.timeClick;
+    arr.push(result);
+    this.setState(state => ({
+      timeClick: arr,
+      isVisible: true
+    }));
+
+  }
+
+  render() {
     const {secondRatio, minuteRatio, hourRatio, isVisible} = this.state
     return (
-      <>
-      <Clock secondRatio={secondRatio} minuteRatio={minuteRatio} hourRatio={hourRatio} updateVisible={this.state.updateVisible}/>
-      <div>
-        <button onClick= {this.saveTimeHandler.bind(this)}>Save Time Stamp</button>
-      </div>
-      <ClickLog isVisible={isVisible}></ClickLog>
-      </>
+        <>
+          <Clock secondRatio={secondRatio} minuteRatio={minuteRatio} hourRatio={hourRatio}
+                 showClickTime={this.showClickTime}  />
+          {isVisible ? <ClickLog timeClick={this.state.timeClick} /> : ''}
+        </>
     );
   }
- 
 }
 
 

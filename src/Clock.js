@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Clock({ hourRatio, minuteRatio, secondRatio, updateVisible }) {
+function Clock({ hourRatio, minuteRatio, secondRatio, showClickTime }) {
     return (
         <div className="clock">
             <div className="clockItem">
@@ -48,9 +48,8 @@ function Clock({ hourRatio, minuteRatio, secondRatio, updateVisible }) {
             </div>
             <div className="clockBtns">
                 <button className="reverseBtn">Reverse</button>
-                <button className="showLog" onClick ={() => {                  
-                    
-                    updateVisible();
+                <button className="showLog" onClick ={() => {
+                    showClickTime();
                 }}>Log</button>
             </div>
 
