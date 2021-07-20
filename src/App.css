@@ -26,6 +26,9 @@ body {
   position: relative;
  
 }
+.clockBtns {
+  margin: 100px 0 0;
+}
 
 .clock::after {
   content: '';
@@ -143,7 +146,7 @@ body {
   background-color: black;
 }
 
-.showLog {
+.clockBtns {
   position: relative;
   top: -100px;
 }
@@ -160,7 +163,7 @@ body {
   text-align: center;
 }
 
-.showTime-container ul, li {
+.showTime-container ul, .showTime-container li {
   position: relative;
   width: 100%;
   margin: 0;

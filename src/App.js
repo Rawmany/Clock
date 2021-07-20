@@ -3,15 +3,21 @@ import React, { Component } from 'react';
 import './App.css';
 import Clock from './Clock';
 import ClickLog from './Click-log'
+import ClockBtns from "./Clock-btns";
 
 class App extends Component {
 
   state = {
+    isVisible: false,
+    timeClick: [],
+    isRealTime: true,
+    isRightDirection: true,
+    seconds: 0,
+    minutes: 0,
+    hours: 0,
     secondRatio: 0,
     minuteRatio: 0,
     hourRatio: 0,
-    isVisible: false,
-    timeClick: [],
   }
 
   componentDidMount() {
@@ -20,27 +26,54 @@ class App extends Component {
     }, 1000);
   }
 
-
-
   setClock = () => {
-    const currentDate = new Date();
-    let secondRatio = currentDate.getSeconds() / 60;
-    let minuteRatio = (secondRatio + currentDate.getMinutes()) / 60;
-    let hourRatio = (minuteRatio + currentDate.getHours()) / 12;
-    this.setState({secondRatio: secondRatio = currentDate.getSeconds() / 60})
-    this.setState({minuteRatio: minuteRatio = (secondRatio + currentDate.getMinutes()) / 60})
-    // eslint-disable-next-line no-unused-vars
-    this.setState({hourRatio: hourRatio = (minuteRatio + currentDate.getHours()) / 12});
+      const directionSecond = this.state.isRightDirection ? +1 : -1;
+      let directionMinutes = 0;
+      let directionHours = 0;
+      const data = new Date();
+      const seconds = data.getSeconds(!this.state.isRealTime ? data.setSeconds(this.state.seconds + directionSecond) : '');
 
-  }
+      if(seconds === 0) {
+        if (!this.state.isRightDirection) {
+          directionMinutes = -1;
+        }
+        if (this.state.isRightDirection) {
+          directionMinutes = +1;
+        }
+      } else {
+        directionMinutes = 0;
+      }
 
-  showClickTime = (state) => {
+      const minutes = !this.state.isRealTime ? this.state.minutes + directionMinutes : data.getMinutes();
 
-    const currentDate = new Date();
-    let clickHour = currentDate.getHours();
-    let clickMinute = currentDate.getMinutes();
-    let clickSecond = currentDate.getSeconds();
-    let result = `${clickHour}:${clickMinute}:${clickSecond}`;
+    if(minutes === 0) {
+      if (!this.state.isRightDirection) {
+        directionHours = -1;
+      }
+      if (this.state.isRightDirection) {
+        directionHours = +1;
+      }
+    } else {
+      directionHours = 0;
+    }
+      const hours = !this.state.isRealTime ? this.state.hours + directionHours : data.getHours()
+      this.setState(state => ({
+        seconds: seconds,
+        minutes: minutes,
+        hours: hours,
+      }))
+
+    let secondRatio = seconds / 60;
+    let minuteRatio = minutes / 60;
+    let hourRatio = hours / 12;
+    this.setState({secondRatio: secondRatio})
+    this.setState({minuteRatio: minuteRatio})
+    this.setState({hourRatio: hourRatio});
+
+    }
+
+  showClickTime = () => {
+    let result = `${this.state.hours}:${this.state.minutes}:${this.state.seconds}`;
     let arr = this.state.timeClick;
     arr.push(result);
     this.setState(state => ({
@@ -50,18 +83,23 @@ class App extends Component {
 
   }
 
+  changeDirection = () => {
+    this.setState(state => ({
+      isRealTime: false,
+      isRightDirection: !this.state.isRightDirection,
+    }));
+  }
+
   render() {
     const {secondRatio, minuteRatio, hourRatio, isVisible} = this.state
     return (
         <>
-          <Clock secondRatio={secondRatio} minuteRatio={minuteRatio} hourRatio={hourRatio}
-                 showClickTime={this.showClickTime}  />
+          <Clock secondRatio={secondRatio} minuteRatio={minuteRatio} hourRatio={hourRatio} />
+          <ClockBtns showClickTime={this.showClickTime} changeDirection={this.changeDirection} />
           {isVisible ? <ClickLog timeClick={this.state.timeClick} /> : ''}
         </>
     );
   }
 }
-
-
 
 export default App;

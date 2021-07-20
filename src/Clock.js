@@ -1,6 +1,8 @@
-import React from 'react'
+// eslint-disable-next-line no-unused-vars
+import React, {useState} from 'react'
 
-function Clock({ hourRatio, minuteRatio, secondRatio, showClickTime }) {
+function Clock({ hourRatio, minuteRatio, secondRatio }) {
+
     return (
         <div className="clock">
             <div className="clockItem">
@@ -46,14 +48,6 @@ function Clock({ hourRatio, minuteRatio, secondRatio, showClickTime }) {
                     <div>12</div>
                 </div>
             </div>
-            <div className="clockBtns">
-                <button className="reverseBtn">Reverse</button>
-                <button className="showLog" onClick ={() => {
-                    showClickTime();
-                }}>Log</button>
-            </div>
-
-
         </div>
     )
 }

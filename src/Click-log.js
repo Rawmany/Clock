@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 
 
-function Timer({timeClick}) {
+function Log({timeClick}) {
 
     let logItem = timeClick.map((item) => {
         return <li>{item}</li>
@@ -17,4 +17,4 @@ function Timer({timeClick}) {
     )
 }
 
-export default Timer
+export default Log
